@@ -8,7 +8,7 @@
 
     <groupId>org.hudsonci.plugins</groupId>
     <artifactId>script-realm</artifactId>
-    <version>1.6-h-1-SNAPSHOT</version>
+    <version>1.6-h-1</version>
     
     <packaging>hpi</packaging>
     
@@ -73,7 +73,8 @@
         <connection>scm:git:git://github.com/hudson3-plugin/script-realm-plugin.git</connection>
         <developerConnection>scm:git:ssh://git@github.com/hudson3-plugin/script-realm-plugin.git</developerConnection>
         <url>http://github.com/hudson3-plugin/script-realm-plugin</url>
-    </scm>
+      <tag>script-realm-1.6-h-1</tag>
+  </scm>
      
 </project>  
   
