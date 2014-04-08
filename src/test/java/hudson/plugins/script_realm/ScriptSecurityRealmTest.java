@@ -1,10 +1,10 @@
 package hudson.plugins.script_realm;
 
 import java.io.File;
-
 import org.jvnet.hudson.test.HudsonTestCase;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.ldap.AuthenticationException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -40,7 +40,7 @@ public class ScriptSecurityRealmTest extends HudsonTestCase {
         try {
             new ScriptSecurityRealm(falseScript.getAbsolutePath(), null, null).authenticate("test", "test");
             fail();
-        } catch (AuthenticationException e) {
+        } catch (BadCredentialsException e) {
             // as expected
         }
     }

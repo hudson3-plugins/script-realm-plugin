@@ -31,31 +31,30 @@ import hudson.security.GroupDetails;
 import hudson.security.SecurityRealm;
 import hudson.util.QuotedStringTokenizer;
 import hudson.util.StreamTaskListener;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.commons.io.output.NullOutputStream;
 import org.apache.commons.lang.StringUtils;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.springframework.dao.DataAccessException;
-import org.springframework.security.AuthenticationException;
-import org.springframework.security.AuthenticationServiceException;
-import org.springframework.security.BadCredentialsException;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.userdetails.User;
-import org.springframework.security.userdetails.UserDetails;
-import org.springframework.security.userdetails.UsernameNotFoundException;
+import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 /**
  * @author Kohsuke Kawaguchi
@@ -92,7 +91,7 @@ public class ScriptSecurityRealm extends AbstractPasswordBasedSecurityRealm {
                 throw new BadCredentialsException(out.toString());
             }
             GrantedAuthority[] groups = loadGroups(username);
-            return new User(username, "", true, true, true, true, groups);
+            return new User(username, "", true, true, true, true, Arrays.asList(groups));
         } catch (InterruptedException e) {
             throw new AuthenticationServiceException("Interrupted", e);
         } catch (IOException e) {
@@ -102,7 +101,7 @@ public class ScriptSecurityRealm extends AbstractPasswordBasedSecurityRealm {
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
         GrantedAuthority[] groups = loadGroups(username);
-        return new User(username, "", true, true, true, true, groups);
+        return new User(username, "", true, true, true, true, Arrays.asList(groups));
     }
 
     @Override
